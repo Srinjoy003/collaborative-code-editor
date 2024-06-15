@@ -2,10 +2,8 @@
 
 import React, { useEffect } from "react";
 import SplitPane from "react-split-pane";
-import "@/app/utils/styles.css"; 
+import "@/app/lib/utils/styles.css"; 
 import { FaCss3, FaHtml5 } from "react-icons/fa";
-import { IoIosSettings } from "react-icons/io";
-import { FaChevronDown } from "react-icons/fa6";
 import { BiLogoJavascript } from "react-icons/bi";
 import Editor from "@monaco-editor/react";
 import { useState } from "react";

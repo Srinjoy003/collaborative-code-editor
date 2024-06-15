@@ -1,16 +1,15 @@
 "use client";
 
-import Editor from "@monaco-editor/react";
-import { useState, useRef } from "react";
-import * as Babel from "@babel/standalone";
-import WebDev from "@/app/components/webDev";
 import IDE from "@/app/components/IDE";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 export default function Home() {
+	const searchParams = useSearchParams();
+	const type = searchParams.get("type");
+
 	return (
 		<main className="w-screen h-screen overflow-hidden">
-			{/* <WebDev /> */}
-			<IDE />
+			{type === "web" ? <WebDev /> : <IDE type={type}/>}
 		</main>
 	);
 }

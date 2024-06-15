@@ -23,7 +23,7 @@ body {
 }
 
 .Resizer.horizontal {
-    height: 2px;
+    height: 5px;
     margin: -5px 0;
     cursor: row-resize;
     width: 100%;
