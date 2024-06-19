@@ -15,8 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import OutputWindow from "@/app/components/OutputWindow";
 import CustomInput from "./CustomInput";
-// import CustomInput from "./CustomInput";
-// import OutputDetails from "./OutputDetails";
+
 
 const javascriptDefault = `/**
 * Problem: Binary Search: Search a sorted array for a target value.
@@ -48,8 +47,8 @@ const target = 5;
 console.log(binarySearch(arr, target));
 `;
 
-export default function IDE({type}) {
-	const [code, setCode] = useState(javascriptDefault);
+export default function IDE({type, code, setCode, handleEditorOnMount}) {
+	// const [code, setCode] = useState(javascriptDefault);
 	const [customInput, setCustomInput] = useState("");
 	const [outputDetails, setOutputDetails] = useState(null);
 	const [processing, setProcessing] = useState(null);
@@ -63,8 +62,12 @@ export default function IDE({type}) {
 	};
 
 	const onChange = (data) => {
-		setCode(data);
+		setCode((prevCode) => ({
+			...prevCode,
+			text: data,
+		}));
 	};
+
 	const handleCompile = () => {
 		setProcessing(true);
 
@@ -171,7 +174,7 @@ export default function IDE({type}) {
 				onClick={handleCompile}
 				disabled={!code}
 				className={classnames(
-					"mt-4 border-2 border-transparent rounded-md shadow-md px-4 py-2 hover:shadow-lg transition duration-200 text-white flex-shrink-0",
+					"mt-14 border-2 border-transparent rounded-md shadow-md px-4 py-2 hover:shadow-lg transition duration-200 text-white flex-shrink-0",
 					!code
 						? "opacity-50 cursor-not-allowed"
 						: "bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
@@ -218,8 +221,9 @@ export default function IDE({type}) {
 					defaultLanguage="javascript"
 					defaultValue="// Write your code here"
 					theme="vs-dark"
-					value={code}
+					value={code.text}
 					onChange={onChange}
+					onMount={handleEditorOnMount}
 				/>
 				<div className="h-full w-full bg-gray-900 p-5">
 					<div className="w-full flex gap-10 text-lg">
@@ -244,7 +248,7 @@ export default function IDE({type}) {
 							Input
 						</button>
 					</div>
-					<div className="w-full h-full px-4 py-4 overflow-scroll">
+					<div className="w-full h-full px-4 py-4 ">
 						{outputWindowType === 0 ? (
 							<OutputWindow outputDetails={outputDetails} />
 						) : (
