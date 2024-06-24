@@ -1,0 +1,43 @@
+.header{
+    height: 34vw;
+    margin: 30px auto;
+    background: url('/header_img.png') no-repeat center;
+    background-size: 100pc;
+    position: relative;
+    border-radius:15px;
+}
+.header-contents{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1.5vw;
+    max-width: 50%;
+    bottom: 10%;
+    left: 6vw;
+    font-family: 'Poppins', sans-serif; /* make sure to import the Poppins font in your HTML */
+    color: #ffffff; /* change the text color to white */
+    animation: fadeIn 3s; /* add a fade-in animation */
+}
+.header-contents h2{
+    font-weight: 600;
+    color:#ffffff;
+    font-size:max(80px);
+    line-height: 0.9;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.header-contents button{
+    border: none;
+    color: #747474;
+    font-weight: 500;
+    padding:1vw 2.3vw;
+    background-color:white;
+    border-radius: 50px;
+    font-size: max(1vw,13px);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.7);
+
+}
+.header-contents button:hover {
+    background-color: tomato; /* change the background color on hover */
+    color: #ffffff; /* change the text color on hover */
+}
