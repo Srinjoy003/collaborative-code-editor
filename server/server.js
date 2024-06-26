@@ -21,7 +21,7 @@ io.on("connection", (socket) => {
 
 	socket.on("update-code", (code) => {
 		console.log("Received code");
-		socket.broadcast.emit("update-code", code);
+		socket.broadcast.emit("update-code", code, socket.id);
 	});
 
 	// still working

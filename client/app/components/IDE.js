@@ -222,7 +222,7 @@ export default function IDE({type, code, setCode, handleEditorOnMount}) {
 					defaultValue="// Write your code here"
 					theme="vs-dark"
 					value={code.text}
-					onChange={onChange}
+					// onChange={onChange}
 					onMount={handleEditorOnMount}
 				/>
 				<div className="h-full w-full bg-gray-900 p-5">
