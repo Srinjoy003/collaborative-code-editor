@@ -8,7 +8,7 @@ import { BiLogoJavascript } from "react-icons/bi";
 import Editor from "@monaco-editor/react";
 import { useState } from "react";
 
-function WebDev() {
+function WebDev({handleEditorOnMount}) {
 	const [html, setHtml] = useState("");
 	const [css, setCss] = useState("");
 	const [js, setJs] = useState("");

@@ -2,20 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .custom-cursor {
-    border-left: 2px solid orange;
-    margin-left: -1px;
-    position: relative;
-  }
-  .custom-cursor::after {
-    z-index: 10;
-    content: 'hello';
-    position: absolute;
-    background-color: orange;
-    color: white;
-    top: -1.5em;
-    left: -0.1rem;
-    padding: 2px 4px;
-    font-size: 12px;
-    border-radius: 3px;
-  }
+  border-left: 2px solid orange;
+  margin-left: -1px;
+  position: relative;
+}
+
+.custom-cursor::after {
+  z-index: 10;
+  content: 'hello';
+  position: absolute;
+  background-color: orange;
+  color: white;
+  top: -1.5em;
+  left: -0.1rem;
+  padding: 2px 4px;
+  font-size: 12px;
+  border-radius: 3px;
+}

@@ -1,18 +1,19 @@
 import React from "react";
 import "./Footer.css";
-import { assets } from "../../assets/assets";
+import { assets } from "@/public/assets/assets";
+import Image from "next/image";
 
 const Footer = () => {
   return (
     <div className="footer" id="footer">
       <div className="footer-content">
         <div className="footer-content-left">
-          <img src={assets.logo1} alt="logo" width="100" height="80"/>
+          <Image src={assets.logo1} alt="logo" width="100" height="80"/>
           <p>Revolutionizes software development by enabling real-time, collaborative coding, empowering teams globally to build innovative applications with integrated live editing and instant feedback.</p>
           <div className="footer-social-icons">
-            <img src={assets.facebook_icon} alt="" />
-            <img src={assets.linkedin_icon} alt="" />
-            <img src={assets.twitter_icon} alt="" />
+            <Image src={assets.facebook_icon} alt="" />
+            <Image src={assets.linkedin_icon} alt="" />
+            <Image src={assets.twitter_icon} alt="" />
           </div>
         </div> 
         <div className="footer-content-center">

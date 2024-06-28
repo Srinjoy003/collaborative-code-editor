@@ -4,6 +4,8 @@ import { io } from "socket.io-client";
 import IDE from "@/app/components/IDE";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
+import WebDev from "@/app/components/webDev";
+
 
 const javascriptDefault = `/**
 * Problem: Binary Search: Search a sorted array for a target value.
@@ -42,93 +44,84 @@ export default function Home() {
 		lineNumber: 0,
 		column: 0,
 	});
+	const [users, setUsers] = useState({});
+
+	const webDevRefs = {
+		htmlRef: useRef(null),
+		cssRef: useRef(null),
+		jsRef: useRef(null),
+	};
+
 	const searchParams = useSearchParams();
-	const type = searchParams.get("type");
+	// const type = searchParams.get("type");
+	const type = 'web';
+
 
 	const editorRef = useRef(null);
 	const prevCodeRef = useRef(code.text);
 	const updatingRef = useRef(false);
 	const latestCodeRef = useRef(code.text);
 
-	const [users, setUsers] = useState({
-	});
-
 	const decorationsRef = useRef([]);
 	const timersRef = useRef({});
 
-	// useEffect(() => {
-	//   setUsers((prevUsers) => ({
-	// 	...prevUsers,
-	// 	user2: {
-	// 	  ...prevUsers.user2,
-	// 	  lineNumber: code.lineNumber,
-	// 	  column: code.column,
-	// 	},
-	//   }));
-	// }, [code]);
-
-	// useEffect(() => {
-	// 	setUsers((prevUsers) => ({
-	// 	  ...prevUsers,
-	// 	  [`user${Object.keys(prevUsers).length + 1}`]: {
-	// 		lineNumber: code.lineNumber,
-	// 		column: code.column,
-	// 		name: `User ${Object.keys(prevUsers).length + 1}`  // You can assign a name dynamically if needed
-	// 	  },
-	// 	}));
-
-	//   }, [code]);
-  
 	useEffect(() => {
-		console.log(users)
-	  updateCursors();
+		console.log(users);
+		updateCursors();
 	}, [users]);
-  
+
 	const updateCursors = () => {
-	  const editor = editorRef.current;
-	  if (!editor) return;
-  
-	  // Remove previous decorations
-	//   editor.deltaDecorations(decorationsRef.current, []);
-  
-	  const decorations = Object.entries(users).map(([key, user]) => ({
-		range: new monaco.Range(
-		  user.lineNumber,
-		  user.column,
-		  user.lineNumber,
-		  user.column
-		),
-		options: {
-		  className: `custom-cursor`,
-		  afterContentClassName: `username-${key}`,
-		  hoverMessage: { value: user.name },
-		},
-	  }));
-  
-	  decorationsRef.current = editor.deltaDecorations(decorationsRef.current, decorations);
-	  Object.keys(users).forEach((key) => {
-		if (timersRef.current[key]) {
-		  clearTimeout(timersRef.current[key]);
-		}
-		timersRef.current[key] = setTimeout(() => {
-		  removeCursor(key);
-		}, 5000);
-	  });
+		const editor = editorRef.current;
+		if (!editor) return;
+
+		// Remove previous decorations
+		//   editor.deltaDecorations(decorationsRef.current, []);
+
+		const decorations = Object.entries(users).map(([key, user]) => ({
+			range: new monaco.Range(
+				user.lineNumber,
+				user.column,
+				user.lineNumber,
+				user.column
+			),
+			options: {
+				className: `custom-cursor`,
+				inlineClassNameOptions: {
+					inlineClassName: `custom-cursor-${key}`,
+					hoverMessage: { value: "bye" },
+				},
+				inlineClassNameValues: {
+					"--cursor-color": user.color,
+					"--cursor-message": `hello`,
+				},
+			},
+		}));
+
+		decorationsRef.current = editor.deltaDecorations(
+			decorationsRef.current,
+			decorations
+		);
+		Object.keys(users).forEach((key) => {
+			if (timersRef.current[key]) {
+				clearTimeout(timersRef.current[key]);
+			}
+			timersRef.current[key] = setTimeout(() => {
+				removeCursor(key);
+			}, 5000);
+		});
 	};
-
-
 
 	const removeCursor = (key) => {
 		const editor = editorRef.current;
 		if (!editor) return;
-	
+
 		// Remove the user's decoration
 		setUsers((prevUsers) => {
-		  const updatedUsers = { ...prevUsers };
-		  delete updatedUsers[key];
-		  return updatedUsers;
+			const updatedUsers = { ...prevUsers };
+			delete updatedUsers[key];
+			return updatedUsers;
 		});
-	  };
+	};
 
 	useEffect(() => {
 		const socket = io("http://localhost:4000", { reconnection: false });
@@ -163,11 +156,11 @@ export default function Home() {
 					setUsers((prevUsers) => ({
 						...prevUsers,
 						[socketID]: {
-						  lineNumber: newCode.lineNumber,
-						  column: newCode.column,
-						  name: name  // You can assign a name dynamically if needed
+							lineNumber: newCode.lineNumber,
+							column: newCode.column,
+							name: name, // You can assign a name dynamically if needed
 						},
-					  }));
+					}));
 					console.log("Received code:", newCode);
 				}
 			});
@@ -185,7 +178,7 @@ export default function Home() {
 
 	const handleEditorDidMount = (editor) => {
 		editorRef.current = editor;
-		console.log();
+
 		editor.onDidChangeModelContent((event) => {
 			const changes = event.changes[0];
 			const { range, text } = changes;
@@ -205,13 +198,12 @@ export default function Home() {
 			});
 		});
 
-		// updateCursors();
 	};
 
 	return (
 		<main className="w-screen h-screen overflow-hidden">
 			{type === "web" ? (
-				<WebDev />
+				<WebDev handleEditorDidMount={handleEditorDidMount}/>
 			) : (
 				<IDE
 					type={type}

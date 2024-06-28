@@ -11,9 +11,19 @@ const io = new Server(server, {
 	},
 });
 
+const generateRandomHexColor = () => {
+	const letters = "0123456789ABCDEF";
+	let color = "#";
+	for (let i = 0; i < 6; i++) {
+		color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+};
+
 io.on("connection", (socket) => {
 	console.log("connected with ", socket.id);
 	socket.broadcast.emit('sync-code', socket.id)
+	socket.cursorColour = generateRandomHexColor()
 
 	socket.on("disconnect", () => {
 		console.log("disconnected: ", socket.id);
