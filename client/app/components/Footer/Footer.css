@@ -22,3 +22,7 @@
     align-items: 30px;
    font-family: poppins;
 }
+
+.footer-social-icons{
+    display: flex;
+}

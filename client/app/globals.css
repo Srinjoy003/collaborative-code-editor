@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 
+
+
+
 .custom-cursor {
   border-left: 2px solid orange;
   margin-left: -1px;
