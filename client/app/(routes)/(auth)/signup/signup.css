@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+.main_container_signup {
+    background: #0d1117;
+    padding: 20px 30px;
+    margin: 0px auto;
+    width: 400px;
+    margin-top: 100px;
+    border-top: 5px solid #58a6ff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center all children elements horizontally */
+    text-align: center; /* Center text */
+}
+
+.main_container_signup .header {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.main_container_signup .header h2 {
+    color: #c9d1d9;
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.main_container_signup .box {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.main_container_signup .box input {
+    width: 100%;
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    border: 1px solid #30363d;
+    background-color: #161b22;
+    color: #c9d1d9;
+    margin-bottom: 10px;
+}
+
+.main_container_signup p {
+    margin: 15px 0;
+    font-size: 12px;
+    color: #c9d1d9;
+    font-weight: 600;
+}
+
+.main_container_signup button {
+    margin-top: 10px;
+    padding: 10px 30px;
+    border: none;
+    outline: none;
+    background: #238636;
+    border-radius: 5px;
+    color: #c9d1d9;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.button_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center buttons horizontally */
+    margin-top: 20px;
+}
+
+.google, .github {
+    width: 80%; /* Set a fixed width for the buttons */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.google {
+    background: #4285F4;
+}
+
+.github {
+    background: #333;
+}
+
+.logo {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.error {
+    color: red;
+    margin-bottom: 15px;
+}
