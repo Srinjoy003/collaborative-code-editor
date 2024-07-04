@@ -2,13 +2,13 @@
 
 import React, { useEffect } from "react";
 import SplitPane from "react-split-pane";
-import "@/app/lib/utils/styles.css"; 
+import "@/app/lib/utils/styles.css";
 import { FaCss3, FaHtml5 } from "react-icons/fa";
 import { BiLogoJavascript } from "react-icons/bi";
 import Editor from "@monaco-editor/react";
 import { useState } from "react";
 
-function WebDev({handleEditorOnMount}) {
+function WebDev({ handleEditorOnMount, code }) {
 	const [html, setHtml] = useState("");
 	const [css, setCss] = useState("");
 	const [js, setJs] = useState("");
@@ -19,11 +19,11 @@ function WebDev({handleEditorOnMount}) {
 		const combinedOutput = `
             <html>
                 <head>
-                    <style>${css}</style>
+                    <style>${code.css}</style>
                 </head>
                 <body>
-                    ${html}
-                    <script>${js}</script>
+                    ${code.html}
+                    <script>${code.js}</script>
                 </body>
             </html>
         `;
@@ -35,8 +35,7 @@ function WebDev({handleEditorOnMount}) {
 
 	useEffect(() => {
 		updateOutput();
-		console.log(html);
-	}, [html, css, js]);
+	}, [code]);
 
 	return (
 		<>
@@ -65,8 +64,8 @@ function WebDev({handleEditorOnMount}) {
 										height="100%"
 										defaultLanguage="html"
 										theme="vs-dark"
-										value={html}
-										onChange={(value) => setHtml(value)}
+										value={code.html}
+										onMount={(editor) => handleEditorOnMount(editor, "html")}
 									/>
 								</div>
 							</div>
@@ -88,8 +87,8 @@ function WebDev({handleEditorOnMount}) {
 											height="100%"
 											defaultLanguage="css"
 											theme="vs-dark"
-											value={css}
-											onChange={(value) => setCss(value)}
+											value={code.css}
+											onMount={(editor) => handleEditorOnMount(editor, "css")}
 										/>
 									</div>
 								</div>
@@ -111,8 +110,8 @@ function WebDev({handleEditorOnMount}) {
 											height="100%"
 											defaultLanguage="javascript"
 											theme="vs-dark"
-											value={js}
-											onChange={(value) => setJs(value)}
+											value={code.js}
+											onMount={(editor) => handleEditorOnMount(editor, "js")}
 										/>
 									</div>
 								</div>
@@ -183,8 +182,8 @@ function WebDev({handleEditorOnMount}) {
 										height="100%"
 										defaultLanguage="html"
 										theme="vs-dark"
-										value={html}
-										onChange={(value) => setHtml(value)}
+										value={code.html}
+										onMount={(editor) => handleEditorOnMount(editor, "html")}
 									/>
 								)}
 								{option === "css" && (
@@ -192,8 +191,8 @@ function WebDev({handleEditorOnMount}) {
 										height="100%"
 										defaultLanguage="css"
 										theme="vs-dark"
-										value={css}
-										onChange={(value) => setCss(value)}
+										value={code.css}
+										onMount={(editor) => handleEditorOnMount(editor, "css")}
 									/>
 								)}
 								{option === "js" && (
@@ -201,8 +200,8 @@ function WebDev({handleEditorOnMount}) {
 										height="100%"
 										defaultLanguage="js"
 										theme="vs-dark"
-										value={js}
-										onChange={(value) => setJs(value)}
+										value={code.js}
+										onMount={(editor) => handleEditorOnMount(editor, "js")}
 									/>
 								)}
 							</div>

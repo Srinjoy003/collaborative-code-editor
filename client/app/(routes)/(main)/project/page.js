@@ -6,7 +6,6 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import WebDev from "@/app/components/webDev";
 
-
 const javascriptDefault = `/**
 * Problem: Binary Search: Search a sorted array for a target value.
 */
@@ -37,25 +36,55 @@ const target = 5;
 console.log(binarySearch(arr, target));
 `;
 
+function isEqual(obj1, obj2) {
+	if (obj1 === obj2) return true;
+
+	if (
+		typeof obj1 !== "object" ||
+		typeof obj2 !== "object" ||
+		obj1 == null ||
+		obj2 == null
+	) {
+		return false;
+	}
+
+	let keys1 = Object.keys(obj1);
+	let keys2 = Object.keys(obj2);
+
+	if (keys1.length !== keys2.length) {
+		return false;
+	}
+
+	for (let key of keys1) {
+		if (!keys2.includes(key) || !isEqual(obj1[key], obj2[key])) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 export default function Home() {
 	const [socket, setSocket] = useState(io({ autoConnect: false }));
 	const [code, setCode] = useState({
-		text: javascriptDefault,
+		text: { html: "", css: "", js: "", program: javascriptDefault },
+		lastChangeEditor: "",
 		lineNumber: 0,
 		column: 0,
+		type: "program",
 	});
 	const [users, setUsers] = useState({});
 
-	const webDevRefs = {
+	const codeRefs = {
+		programRef: useRef(null),
 		htmlRef: useRef(null),
 		cssRef: useRef(null),
 		jsRef: useRef(null),
 	};
 
 	const searchParams = useSearchParams();
-	// const type = searchParams.get("type");
-	const type = 'web';
-
+	const type = searchParams.get("type");
+	// const type = "web";
 
 	const editorRef = useRef(null);
 	const prevCodeRef = useRef(code.text);
@@ -70,49 +99,108 @@ export default function Home() {
 		updateCursors();
 	}, [users]);
 
+	// const updateCursors = () => {
+	// 	const editor = codeRefs.programRef.current;
+	// 	if (!editor) return;
+
+	// 	const decorations = Object.entries(users).map(([key, user]) => ({
+	// 		range: new monaco.Range(
+	// 			user.lineNumber,
+	// 			user.column,
+	// 			user.lineNumber,
+	// 			user.column
+	// 		),
+	// 		options: {
+	// 			className: `custom-cursor`,
+	// 			inlineClassNameOptions: {
+	// 				inlineClassName: `custom-cursor-${key}`,
+	// 				hoverMessage: { value: "bye" },
+	// 			},
+	// 			inlineClassNameValues: {
+	// 				"--cursor-color": user.color,
+	// 				"--cursor-message": `hello`,
+	// 			},
+	// 		},
+	// 	}));
+
+	// 	decorationsRef.current = editor.deltaDecorations(
+	// 		decorationsRef.current,
+	// 		decorations
+	// 	);
+	// 	Object.keys(users).forEach((key) => {
+	// 		if (timersRef.current[key]) {
+	// 			clearTimeout(timersRef.current[key]);
+	// 		}
+	// 		timersRef.current[key] = setTimeout(() => {
+	// 			removeCursor(key);
+	// 		}, 5000);
+	// 	});
+	// };
+
+	// const removeCursor = (key) => {
+	// 	const editor = codeRefs.programRef.current;
+	// 	if (!editor) return;
+
+	// 	// Remove the user's decoration
+	// 	setUsers((prevUsers) => {
+	// 		const updatedUsers = { ...prevUsers };
+	// 		delete updatedUsers[key];
+	// 		return updatedUsers;
+	// 	});
+	// };
+
 	const updateCursors = () => {
-		const editor = editorRef.current;
-		if (!editor) return;
+		const editors = {
+			html: codeRefs.htmlRef.current,
+			css: codeRefs.cssRef.current,
+			js: codeRefs.jsRef.current,
+			program: codeRefs.programRef.current,
+		};
 
-		// Remove previous decorations
-		//   editor.deltaDecorations(decorationsRef.current, []);
+		Object.keys(editors).forEach((type) => {
+			const editor = editors[type];
+			if (!editor) return;
 
-		const decorations = Object.entries(users).map(([key, user]) => ({
-			range: new monaco.Range(
-				user.lineNumber,
-				user.column,
-				user.lineNumber,
-				user.column
-			),
-			options: {
-				className: `custom-cursor`,
-				inlineClassNameOptions: {
-					inlineClassName: `custom-cursor-${key}`,
-					hoverMessage: { value: "bye" },
-				},
-				inlineClassNameValues: {
-					"--cursor-color": user.color,
-					"--cursor-message": `hello`,
-				},
-			},
-		}));
+			const decorations = Object.entries(users)
+				.filter(([key, user]) => user.type === type)
+				.map(([key, user]) => ({
+					range: new monaco.Range(
+						user.lineNumber,
+						user.column,
+						user.lineNumber,
+						user.column
+					),
+					options: {
+						className: `custom-cursor`,
+						inlineClassNameOptions: {
+							inlineClassName: `custom-cursor-${key}`,
+							hoverMessage: { value: "bye" },
+						},
+						inlineClassNameValues: {
+							"--cursor-color": user.color,
+							"--cursor-message": `hello`,
+						},
+					},
+				}));
 
-		decorationsRef.current = editor.deltaDecorations(
-			decorationsRef.current,
-			decorations
-		);
-		Object.keys(users).forEach((key) => {
-			if (timersRef.current[key]) {
-				clearTimeout(timersRef.current[key]);
-			}
-			timersRef.current[key] = setTimeout(() => {
-				removeCursor(key);
-			}, 5000);
+			decorationsRef.current[type] = editor.deltaDecorations(
+				decorationsRef.current[type] || [],
+				decorations
+			);
+
+			Object.keys(users).forEach((key) => {
+				if (timersRef.current[key]) {
+					clearTimeout(timersRef.current[key]);
+				}
+				timersRef.current[key] = setTimeout(() => {
+					removeCursor(type, key);
+				}, 5000);
+			});
 		});
 	};
 
-	const removeCursor = (key) => {
-		const editor = editorRef.current;
+	const removeCursor = (type, key) => {
+		const editor = codeRefs[type + "Ref"].current;
 		if (!editor) return;
 
 		// Remove the user's decoration
@@ -123,8 +211,28 @@ export default function Home() {
 		});
 	};
 
+	// const removeCursor = (type, key) => {
+	// 	const editor = codeRefs[type + "Ref"].current;
+	// 	if (!editor) return;
+
+	// 	const newDecorations = decorationsRef.current[type].filter(
+	// 		(decoration) =>
+	// 			!decoration.options.inlineClassNameOptions.inlineClassName.includes(
+	// 				`custom-cursor-${key}`
+	// 			)
+	// 	);
+
+	// 	decorationsRef.current[type] = editor.deltaDecorations(
+	// 		decorationsRef.current[type],
+	// 		newDecorations
+	// 	);
+
+	// };
+
 	useEffect(() => {
-		const socket = io("http://localhost:4000", { reconnection: false });
+		const socket = io(process.env.NEXT_PUBLIC_SERVER_URL, {
+			reconnection: false,
+		});
 
 		setSocket(socket);
 
@@ -134,7 +242,8 @@ export default function Home() {
 	}, []);
 
 	useEffect(() => {
-		if (prevCodeRef.current !== code.text && !updatingRef.current) {
+		// if (prevCodeRef.current !== code.text && !updatingRef.current) {
+		if (!isEqual(prevCodeRef.current, code.text) && !updatingRef.current) {
 			socket.emit("update-code", code);
 			console.log("Emitted code:", code);
 		} else {
@@ -150,7 +259,8 @@ export default function Home() {
 			console.log("Listening");
 
 			socket.on("update-code", (newCode, socketID) => {
-				if (prevCodeRef.current !== newCode.text) {
+				// if (prevCodeRef.current !== newCode.text) {
+				if (!isEqual(prevCodeRef.current, newCode.text)) {
 					updatingRef.current = true; // Set the flag
 					setCode(newCode);
 					setUsers((prevUsers) => ({
@@ -158,6 +268,7 @@ export default function Home() {
 						[socketID]: {
 							lineNumber: newCode.lineNumber,
 							column: newCode.column,
+							type: newCode.type,
 							name: name, // You can assign a name dynamically if needed
 						},
 					}));
@@ -176,8 +287,8 @@ export default function Home() {
 		}
 	}, [socket]);
 
-	const handleEditorDidMount = (editor) => {
-		editorRef.current = editor;
+	const handleEditorOnMount = (editor, type) => {
+		codeRefs[type + "Ref"].current = editor;
 
 		editor.onDidChangeModelContent((event) => {
 			const changes = event.changes[0];
@@ -191,25 +302,26 @@ export default function Home() {
 				startColumn,
 				updatedCode
 			);
-			setCode({
-				text: updatedCode,
-				lineNumber: startLineNumber,
-				column: endColumn,
-			});
-		});
 
+			setCode((prevCode) => ({
+				text: { ...prevCode.text, [type]: updatedCode },
+				lineNumber: endLineNumber,
+				column: endColumn,
+				type: type,
+			}));
+		});
 	};
 
 	return (
 		<main className="w-screen h-screen overflow-hidden">
 			{type === "web" ? (
-				<WebDev handleEditorDidMount={handleEditorDidMount}/>
+				<WebDev handleEditorOnMount={handleEditorOnMount} code={code.text} />
 			) : (
 				<IDE
 					type={type}
-					code={code}
+					code={code.text.program}
 					setCode={setCode}
-					handleEditorOnMount={handleEditorDidMount}
+					handleEditorOnMount={handleEditorOnMount}
 				/>
 			)}
 		</main>

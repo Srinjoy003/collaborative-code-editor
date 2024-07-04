@@ -26,6 +26,7 @@ const ExploreMenu = ({ category, setCategory }) => {
 								alt=""
 							/>
 							<p>{item.menu_name}</p>
+							
 						</div>
 					);
 				})}

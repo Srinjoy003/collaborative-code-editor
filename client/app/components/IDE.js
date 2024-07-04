@@ -221,9 +221,10 @@ export default function IDE({type, code, setCode, handleEditorOnMount}) {
 					defaultLanguage="javascript"
 					defaultValue="// Write your code here"
 					theme="vs-dark"
-					value={code.text}
+					value={code}
 					// onChange={onChange}
-					onMount={handleEditorOnMount}
+					// onMount={handleEditorOnMount}
+					onMount={(editor) => handleEditorOnMount(editor, 'program')}
 				/>
 				<div className="h-full w-full bg-gray-900 p-5">
 					<div className="w-full flex gap-10 text-lg">

@@ -7,12 +7,13 @@ import Navbar from "@/app/components/Navbar/Navbar";
 import ExploreMenu from "@/app/components/ExploreMenu/ExploreMenu";
 import './index.css'
 
+
 const App = () => {
   const[category,setCategory] = useState('all')
 
 	return (
 		<>
-			<div className="app">
+			<div className="app ">
 				<Navbar />
 				<div>
 					<Header />
