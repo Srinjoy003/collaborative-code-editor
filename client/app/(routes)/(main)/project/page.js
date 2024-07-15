@@ -1,10 +1,10 @@
 "use client";
-import { Socket } from "socket.io-client";
 import { io } from "socket.io-client";
-import IDE from "@/app/components/IDE";
+import IDE from "@/app/components/Project/IDE";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
-import WebDev from "@/app/components/webDev";
+import WebDev from "@/app/components/Project/webDev";
+import SocketEvent from "@/app/lib/constants/sockets";
 
 const javascriptDefault = `/**
 * Problem: Binary Search: Search a sorted array for a target value.
@@ -99,55 +99,7 @@ export default function Home() {
 		updateCursors();
 	}, [users]);
 
-	// const updateCursors = () => {
-	// 	const editor = codeRefs.programRef.current;
-	// 	if (!editor) return;
-
-	// 	const decorations = Object.entries(users).map(([key, user]) => ({
-	// 		range: new monaco.Range(
-	// 			user.lineNumber,
-	// 			user.column,
-	// 			user.lineNumber,
-	// 			user.column
-	// 		),
-	// 		options: {
-	// 			className: `custom-cursor`,
-	// 			inlineClassNameOptions: {
-	// 				inlineClassName: `custom-cursor-${key}`,
-	// 				hoverMessage: { value: "bye" },
-	// 			},
-	// 			inlineClassNameValues: {
-	// 				"--cursor-color": user.color,
-	// 				"--cursor-message": `hello`,
-	// 			},
-	// 		},
-	// 	}));
-
-	// 	decorationsRef.current = editor.deltaDecorations(
-	// 		decorationsRef.current,
-	// 		decorations
-	// 	);
-	// 	Object.keys(users).forEach((key) => {
-	// 		if (timersRef.current[key]) {
-	// 			clearTimeout(timersRef.current[key]);
-	// 		}
-	// 		timersRef.current[key] = setTimeout(() => {
-	// 			removeCursor(key);
-	// 		}, 5000);
-	// 	});
-	// };
-
-	// const removeCursor = (key) => {
-	// 	const editor = codeRefs.programRef.current;
-	// 	if (!editor) return;
-
-	// 	// Remove the user's decoration
-	// 	setUsers((prevUsers) => {
-	// 		const updatedUsers = { ...prevUsers };
-	// 		delete updatedUsers[key];
-	// 		return updatedUsers;
-	// 	});
-	// };
+	
 
 	const updateCursors = () => {
 		const editors = {
@@ -174,11 +126,12 @@ export default function Home() {
 						className: `custom-cursor`,
 						inlineClassNameOptions: {
 							inlineClassName: `custom-cursor-${key}`,
-							hoverMessage: { value: "bye" },
+							hoverMessage: { value: "byee" },
 						},
 						inlineClassNameValues: {
 							"--cursor-color": user.color,
-							"--cursor-message": `hello`,
+							"--cursor-message": `byee`,
+							"data-cursor-message": "byeee",
 						},
 					},
 				}));
@@ -211,23 +164,6 @@ export default function Home() {
 		});
 	};
 
-	// const removeCursor = (type, key) => {
-	// 	const editor = codeRefs[type + "Ref"].current;
-	// 	if (!editor) return;
-
-	// 	const newDecorations = decorationsRef.current[type].filter(
-	// 		(decoration) =>
-	// 			!decoration.options.inlineClassNameOptions.inlineClassName.includes(
-	// 				`custom-cursor-${key}`
-	// 			)
-	// 	);
-
-	// 	decorationsRef.current[type] = editor.deltaDecorations(
-	// 		decorationsRef.current[type],
-	// 		newDecorations
-	// 	);
-
-	// };
 
 	useEffect(() => {
 		const socket = io(process.env.NEXT_PUBLIC_SERVER_URL, {
@@ -244,7 +180,7 @@ export default function Home() {
 	useEffect(() => {
 		// if (prevCodeRef.current !== code.text && !updatingRef.current) {
 		if (!isEqual(prevCodeRef.current, code.text) && !updatingRef.current) {
-			socket.emit("update-code", code);
+			socket.emit(SocketEvent.UPDATE_CODE, code);
 			console.log("Emitted code:", code);
 		} else {
 			console.log(prevCodeRef.current, code.text);
@@ -258,7 +194,7 @@ export default function Home() {
 		if (socket) {
 			console.log("Listening");
 
-			socket.on("update-code", (newCode, socketID) => {
+			socket.on(SocketEvent.UPDATE_CODE, (newCode, socketID) => {
 				// if (prevCodeRef.current !== newCode.text) {
 				if (!isEqual(prevCodeRef.current, newCode.text)) {
 					updatingRef.current = true; // Set the flag
@@ -276,13 +212,13 @@ export default function Home() {
 				}
 			});
 
-			socket.on("sync-code", (socketId) => {
+			socket.on(SocketEvent.SYNC_CODE, (socketId) => {
 				const sendCode = {
 					text: latestCodeRef.current,
 					lineNumber: 0,
 					column: 0,
 				};
-				socket.emit("sync-code", sendCode, socketId);
+				socket.emit(SocketEvent.SYNC_CODE, sendCode, socketId);
 			});
 		}
 	}, [socket]);

@@ -2,7 +2,7 @@
 
 import Editor from "@monaco-editor/react";
 import * as Babel from "@babel/standalone";
-import Terminal from "@/app/components/terminal";
+import Terminal from "@/app/components/Project/terminal";
 import SplitPane from "react-split-pane";
 import "@/app/lib/utils/styles.css";
 import { useEffect, useState } from "react";
@@ -13,9 +13,8 @@ import { classnames } from "@/app/lib/utils/general";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import OutputWindow from "@/app/components/OutputWindow";
+import OutputWindow from "@/app/components/Project/OutputWindow";
 import CustomInput from "./CustomInput";
-
 
 const javascriptDefault = `/**
 * Problem: Binary Search: Search a sorted array for a target value.
@@ -47,7 +46,7 @@ const target = 5;
 console.log(binarySearch(arr, target));
 `;
 
-export default function IDE({type, code, setCode, handleEditorOnMount}) {
+export default function IDE({ type, code, setCode, handleEditorOnMount }) {
 	// const [code, setCode] = useState(javascriptDefault);
 	const [customInput, setCustomInput] = useState("");
 	const [outputDetails, setOutputDetails] = useState(null);
@@ -169,7 +168,6 @@ export default function IDE({type, code, setCode, handleEditorOnMount}) {
 
 	return (
 		<main className="h-screen py-10">
-			
 			<button
 				onClick={handleCompile}
 				disabled={!code}
@@ -224,7 +222,7 @@ export default function IDE({type, code, setCode, handleEditorOnMount}) {
 					value={code}
 					// onChange={onChange}
 					// onMount={handleEditorOnMount}
-					onMount={(editor) => handleEditorOnMount(editor, 'program')}
+					onMount={(editor) => handleEditorOnMount(editor, "program")}
 				/>
 				<div className="h-full w-full bg-gray-900 p-5">
 					<div className="w-full flex gap-10 text-lg">

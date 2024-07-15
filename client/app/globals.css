@@ -14,7 +14,9 @@
 
 .custom-cursor::after {
   z-index: 10;
-  content: 'hello';
+  /* content: 'hello'; */
+  /* content: var(--cursor-message); */
+  content: attr(data-cursor-message);
   position: absolute;
   background-color: orange;
   color: white;
