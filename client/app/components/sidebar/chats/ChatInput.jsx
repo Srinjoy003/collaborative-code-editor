@@ -8,11 +8,13 @@ import { FormEvent, useRef } from "react"
 import { LuSendHorizonal } from "react-icons/lu"
 import { v4 as uuidV4 } from "uuid"
 import SocketEvent from "@/app/lib/constants/sockets"
+import { useChat } from "@/app/contexts/ChatContext"
 
-function ChatInput({currentUser, setMessages, socket}) {
+
+function ChatInput({currentUser, socket}) {
     // const { currentUser } = useAppContext()
     // const { socket } = useSocket()
-    // const { setMessages } = useChatRoom()
+    const { setMessages } = useChat()
     const inputRef = useRef(null)
 
     const handleSendMessage = (e) => {
@@ -37,7 +39,7 @@ function ChatInput({currentUser, setMessages, socket}) {
     return (
         <form
             onSubmit={handleSendMessage}
-            className="flex justify-between rounded-md border border-primary"
+            className="flex justify-between rounded-md border border-[#2263fe]"
         >
             <input
                 type="text"
@@ -46,7 +48,7 @@ function ChatInput({currentUser, setMessages, socket}) {
                 ref={inputRef}
             />
             <button
-                className="flex items-center justify-center rounded-r-md  bg-primary p-2 text-black"
+                className="flex items-center justify-center rounded-r-md  bg-[#2263fe] p-2 text-white"
                 type="submit"
             >
                 <LuSendHorizonal size={24} />

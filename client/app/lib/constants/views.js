@@ -4,4 +4,5 @@ export const VIEWS = {
     CLIENTS: "CLIENTS",
     RUN: "RUN",
     SETTINGS: "SETTINGS",
+    CODE: "CODE"
 }

@@ -4,7 +4,16 @@
 
 
 
+.view-title {
+  @apply mb-2 w-full border-b pb-2 text-start text-lg;
+}
 
+.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
 
 .custom-cursor {
   border-left: 2px solid orange;

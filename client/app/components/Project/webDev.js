@@ -9,9 +9,6 @@ import Editor from "@monaco-editor/react";
 import { useState } from "react";
 
 function WebDev({ handleEditorOnMount, code }) {
-	const [html, setHtml] = useState("");
-	const [css, setCss] = useState("");
-	const [js, setJs] = useState("");
 	const [output, setOutput] = useState("");
 	const [option, setOption] = useState("html");
 

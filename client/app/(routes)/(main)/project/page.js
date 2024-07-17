@@ -5,6 +5,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import WebDev from "@/app/components/Project/webDev";
 import SocketEvent from "@/app/lib/constants/sockets";
+import { useSocket } from "@/app/contexts/SocketContext";
 
 const javascriptDefault = `/**
 * Problem: Binary Search: Search a sorted array for a target value.
@@ -65,7 +66,8 @@ function isEqual(obj1, obj2) {
 }
 
 export default function Home() {
-	const [socket, setSocket] = useState(io({ autoConnect: false }));
+	const { socket, setSocket } = useSocket();
+
 	const [code, setCode] = useState({
 		text: { html: "", css: "", js: "", program: javascriptDefault },
 		lastChangeEditor: "",
@@ -83,8 +85,8 @@ export default function Home() {
 	};
 
 	const searchParams = useSearchParams();
-	const type = searchParams.get("type");
-	// const type = "web";
+	// const type = searchParams.get("type");
+	const type = "web";
 
 	const editorRef = useRef(null);
 	const prevCodeRef = useRef(code.text);
@@ -98,8 +100,6 @@ export default function Home() {
 		console.log(users);
 		updateCursors();
 	}, [users]);
-
-	
 
 	const updateCursors = () => {
 		const editors = {
@@ -163,7 +163,6 @@ export default function Home() {
 			return updatedUsers;
 		});
 	};
-
 
 	useEffect(() => {
 		const socket = io(process.env.NEXT_PUBLIC_SERVER_URL, {
