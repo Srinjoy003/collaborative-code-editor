@@ -1,42 +1,14 @@
 "use client";
 import { io } from "socket.io-client";
-// import IDE from "@/app/components/Project/IDE";
+import IDE from "@/app/components/Project/IDE";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import WebDev from "@/app/components/Project/webDev";
 import SocketEvent from "@/app/lib/constants/sockets";
 import { useSocket } from "@/app/contexts/SocketContext";
-import IDE from "@/app/components/Project/IDE2";
+import { useRunCode } from "@/app/contexts/RunCodeContext";
 
-const javascriptDefault = `/**
-* Problem: Binary Search: Search a sorted array for a target value.
-*/
 
-// Time: O(log n)
-const binarySearch = (arr, target) => {
- return binarySearchHelper(arr, target, 0, arr.length - 1);
-};
-
-const binarySearchHelper = (arr, target, start, end) => {
- if (start > end) {
-   return false;
- }
- let mid = Math.floor((start + end) / 2);
- if (arr[mid] === target) {
-   return mid;
- }
- if (arr[mid] < target) {
-   return binarySearchHelper(arr, target, mid + 1, end);
- }
- if (arr[mid] > target) {
-   return binarySearchHelper(arr, target, start, mid - 1);
- }
-};
-
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const target = 5;
-console.log(binarySearch(arr, target));
-`;
 
 function isEqual(obj1, obj2) {
 	if (obj1 === obj2) return true;
@@ -66,16 +38,18 @@ function isEqual(obj1, obj2) {
 	return true;
 }
 
-export default function Home() {
+export default function Editor() {
 	const { socket, setSocket } = useSocket();
 
-	const [code, setCode] = useState({
-		text: { html: "", css: "", js: "", program: javascriptDefault },
-		lastChangeEditor: "",
-		lineNumber: 0,
-		column: 0,
-		type: "program",
-	});
+	// const [code, setCode] = useState({
+	// 	text: { html: "", css: "", js: "", program: javascriptDefault },
+	// 	lastChangeEditor: "",
+	// 	lineNumber: 0,
+	// 	column: 0,
+	// 	type: "program",
+	// });
+
+	const {code, setCode} = useRunCode();
 	const [users, setUsers] = useState({});
 
 	const codeRefs = {
@@ -260,6 +234,7 @@ export default function Home() {
 					handleEditorOnMount={handleEditorOnMount}
 				/>
 			)}
+
 		</main>
 	);
 }

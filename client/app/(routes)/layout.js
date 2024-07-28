@@ -4,6 +4,8 @@ import { ChatProvider } from "../contexts/ChatContext";
 import { SocketProvider } from "../contexts/SocketContext";
 import { ViewContextProvider } from "../contexts/ViewContext";
 import { SettingsProvider } from "../contexts/SettingContext";
+import { Toaster } from "react-hot-toast";
+import { RunCodeProvider } from "../contexts/RunCodeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,13 +18,16 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<SettingsProvider>
-					<ViewContextProvider>
-						<ChatProvider>
-							<SocketProvider>{children}</SocketProvider>
-						</ChatProvider>
-					</ViewContextProvider>
-				</SettingsProvider>
+				<RunCodeProvider>
+					<SettingsProvider>
+						<ViewContextProvider>
+							<ChatProvider>
+								<SocketProvider>{children}</SocketProvider>
+							</ChatProvider>
+						</ViewContextProvider>
+					</SettingsProvider>
+				</RunCodeProvider>
+				<Toaster position="top-right" />
 			</body>
 		</html>
 	);

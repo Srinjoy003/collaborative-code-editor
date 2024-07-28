@@ -7,10 +7,13 @@ import { FaCss3, FaHtml5 } from "react-icons/fa";
 import { BiLogoJavascript } from "react-icons/bi";
 import Editor from "@monaco-editor/react";
 import { useState } from "react";
+import { useSettings } from "@/app/contexts/SettingContext";
 
 function WebDev({ handleEditorOnMount, code }) {
 	const [output, setOutput] = useState("");
 	const [option, setOption] = useState("html");
+	const { theme } = useSettings();
+
 
 	const updateOutput = () => {
 		const combinedOutput = `
@@ -36,7 +39,7 @@ function WebDev({ handleEditorOnMount, code }) {
 
 	return (
 		<>
-			<div className="w-screen h-screen md:flex flex-col overflow-hidden bg-[#131417] hidden">
+			{/* <div className="w-screen h-screen md:flex flex-col overflow-hidden bg-[#131417] hidden">
 				<div>
 					<SplitPane
 						split="horizontal"
@@ -51,10 +54,7 @@ function WebDev({ handleEditorOnMount, code }) {
 										<FaHtml5 className="text-xl text-red-500" />
 										<p className="text-primaryText font-semibold">HTML</p>
 									</div>
-									{/* <div className="cursor-pointer flex items-center justify-center gap-4 px-4">
-										<IoIosSettings className="text-xl text-primaryText" />
-										<FaChevronDown className="text-xl text-primaryText" />
-									</div> */}
+									
 								</div>
 								<div className="w-full h-full">
 									<Editor
@@ -74,10 +74,7 @@ function WebDev({ handleEditorOnMount, code }) {
 											<FaCss3 className="text-lg text-sky-500" />
 											<p className="text-primaryText font-semibold">CSS</p>
 										</div>
-										{/* <div className="cursor-pointer flex items-center justify-center gap-4 px-4">
-											<IoIosSettings className="text-xl text-primaryText" />
-											<FaChevronDown className="text-xl text-primaryText" />
-										</div> */}
+									
 									</div>
 									<div className="w-full h-full">
 										<Editor
@@ -96,10 +93,7 @@ function WebDev({ handleEditorOnMount, code }) {
 											<BiLogoJavascript className="text-xl text-yellow-500" />
 											<p className="text-primaryText font-semibold">JS</p>
 										</div>
-										{/* <div className="cursor-pointer flex items-center justify-center gap-4 px-4">
-											<IoIosSettings className="text-xl text-primaryText" />
-											<FaChevronDown className="text-xl text-primaryText" />
-										</div> */}
+									
 									</div>
 									<div className="w-full h-full">
 										<Editor
@@ -127,8 +121,8 @@ function WebDev({ handleEditorOnMount, code }) {
 						</div>
 					</SplitPane>
 				</div>
-			</div>
-			<div className="w-screen h-screen flex flex-col overflow-hidden bg-[#131417] md:hidden">
+			</div> */}
+			<div className="w-screen h-screen flex flex-col overflow-hidden bg-[#131417]">
 				<div>
 					<SplitPane
 						split="horizontal"
@@ -141,35 +135,35 @@ function WebDev({ handleEditorOnMount, code }) {
 								<button
 									className={`bg-secondary ${
 										option === "html"
-											? "border-t-yellow-500"
-											: "border-t-gray-500"
+											? "border-t-blue-300 text-blue-300"
+											: "border-t-gray-500 text-primaryText"
 									} px-4 py-2 border-t-4 flex items-center justify-center gap-3 cursor-pointer`}
 									onClick={() => setOption("html")}
 								>
 									<FaHtml5 className="text-xl text-red-500" />
-									<p className="text-primaryText font-semibold">HTML</p>
+									<p className="font-semibold">HTML</p>
 								</button>
 								<button
 									className={`bg-secondary ${
 										option === "css"
-											? "border-t-yellow-500"
-											: "border-t-gray-500"
+											? "border-t-blue-300 text-blue-300"
+											: "border-t-gray-500 text-primaryText"
 									} px-4 py-2 border-t-4 flex items-center justify-center gap-3 cursor-pointer`}
 									onClick={() => setOption("css")}
 								>
 									<FaCss3 className="text-lg text-sky-500" />
-									<p className="text-primaryText font-semibold">CSS</p>
+									<p className="font-semibold">CSS</p>
 								</button>
 								<button
 									className={`bg-secondary ${
 										option === "js"
-											? "border-t-yellow-500"
-											: "border-t-gray-500"
+											? "border-t-blue-300 text-blue-300"
+											: "border-t-gray-500 text-primaryText"
 									} px-4 py-2 border-t-4 flex items-center justify-center gap-3 cursor-pointer`}
 									onClick={() => setOption("js")}
 								>
 									<BiLogoJavascript className="text-xl text-yellow-500" />
-									<p className="text-primaryText font-semibold">JS</p>
+									<p className="font-semibold">JS</p>
 								</button>
 							</div>
 
@@ -178,7 +172,7 @@ function WebDev({ handleEditorOnMount, code }) {
 									<Editor
 										height="100%"
 										defaultLanguage="html"
-										theme="vs-dark"
+										theme={theme}
 										value={code.html}
 										onMount={(editor) => handleEditorOnMount(editor, "html")}
 									/>
@@ -187,7 +181,7 @@ function WebDev({ handleEditorOnMount, code }) {
 									<Editor
 										height="100%"
 										defaultLanguage="css"
-										theme="vs-dark"
+										theme={theme}
 										value={code.css}
 										onMount={(editor) => handleEditorOnMount(editor, "css")}
 									/>
@@ -196,7 +190,7 @@ function WebDev({ handleEditorOnMount, code }) {
 									<Editor
 										height="100%"
 										defaultLanguage="js"
-										theme="vs-dark"
+										theme={theme}
 										value={code.js}
 										onMount={(editor) => handleEditorOnMount(editor, "js")}
 									/>

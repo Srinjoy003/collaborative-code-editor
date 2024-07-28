@@ -1,30 +1,32 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react';
 
 function useWindowDimensions() {
     const [windowDimensions, setWindowDimensions] = useState({
-        width: window.innerWidth,
-        height: window.innerHeight,
-    })
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+        width: null,
+        height: null,
+    });
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        const updateWindowDimensions = () => {
+        function updateWindowDimensions() {
             setWindowDimensions({
                 width: window.innerWidth,
                 height: window.innerHeight,
-            })
-            setIsMobile(window.innerWidth < 768)
+            });
+            setIsMobile(window.innerWidth < 768);
         }
 
-        window.addEventListener("resize", updateWindowDimensions)
-
-        return () => {
-            window.removeEventListener("resize", updateWindowDimensions)
+        if (typeof window !== 'undefined') {
+            updateWindowDimensions(); // Set initial dimensions
+            window.addEventListener('resize', updateWindowDimensions);
+            return () => window.removeEventListener('resize', updateWindowDimensions);
         }
-    }, [])
-    return { ...windowDimensions, isMobile }
+    }, []);
+
+    return { ...windowDimensions, isMobile };
 }
 
-export default useWindowDimensions
+export default useWindowDimensions;
+

@@ -1,5 +1,5 @@
-import ChatInput from "@/app/components/sidebar/chats/ChatInput";
-import ChatList from "@/app/components/sidebar/chats/ChatList";
+import ChatInput from "@/app/components/sidebar/helpers/ChatInput";
+import ChatList from "@/app/components/sidebar/helpers/ChatList";
 import useResponsive from "@/app/hooks/useResponsive";
 import { useState, useEffect } from "react";
 import { v4 } from "uuid";

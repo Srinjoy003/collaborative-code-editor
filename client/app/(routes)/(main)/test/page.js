@@ -1,21 +1,20 @@
 "use client";
 
 import Sidebar from "@/app/components/sidebar/Sidebar";
-import { Editor } from "@monaco-editor/react";
+// import { Editor } from "@monaco-editor/react";
 import { useSettings } from "@/app/contexts/SettingContext";
-import SplitPane from "react-split-pane";
+import SplitterComponent from "@/app/components/Ui/SplitterComponent";
+import Editor from "@/app/components/Project/Editor";
+
 
 function Test() {
 	const { theme } = useSettings();
 	return (
 		<div className="w-screen h-screen">
-			{/* <SplitterComponent> */}
-			<SplitPane split="vertical" minSize={200} defaultSize={"50%"}>
+			<SplitterComponent>
 				<Sidebar />
-				<Editor theme={theme} />
-			</SplitPane>
-			{/* <Editor /> */}
-			{/* </SplitterComponent> */}
+				<Editor />
+			</SplitterComponent>
 		</div>
 	);
 }

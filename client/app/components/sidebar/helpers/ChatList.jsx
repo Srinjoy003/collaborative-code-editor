@@ -57,8 +57,8 @@ function ChatList({ currentUser }) {
 								className={
 									"text-xs" +
 									(message.username === currentUser.username
-										? " text-black"
-										: " bg-blue-500")
+										? " text-[#47F744]"
+										: " text-blue-500")
 								}
 							>
 								{message.username}
@@ -67,8 +67,8 @@ function ChatList({ currentUser }) {
 								className={
 									"text-xs" +
 									(message.username === currentUser.username
-										? " text-black"
-										: " bg-blue-500")
+										? " text-[#47F744]"
+										: " text-blue-500")
 								}
 							>
 								{message.timestamp}

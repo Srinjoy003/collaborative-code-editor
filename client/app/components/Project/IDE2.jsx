@@ -15,57 +15,21 @@ import "react-toastify/dist/ReactToastify.css";
 
 import OutputWindow from "@/app/components/Project/OutputWindow";
 import CustomInput from "./CustomInput";
+import { useSettings } from "@/app/contexts/SettingContext";
+import { useRunCode } from "@/app/contexts/RunCodeContext";
 
-const javascriptDefault = `/**
-* Problem: Binary Search: Search a sorted array for a target value.
-*/
 
-// Time: O(log n)
-const binarySearch = (arr, target) => {
- return binarySearchHelper(arr, target, 0, arr.length - 1);
-};
-
-const binarySearchHelper = (arr, target, start, end) => {
- if (start > end) {
-   return false;
- }
- let mid = Math.floor((start + end) / 2);
- if (arr[mid] === target) {
-   return mid;
- }
- if (arr[mid] < target) {
-   return binarySearchHelper(arr, target, mid + 1, end);
- }
- if (arr[mid] > target) {
-   return binarySearchHelper(arr, target, start, mid - 1);
- }
-};
-
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const target = 5;
-console.log(binarySearch(arr, target));
-`;
 
 export default function IDE({ type, code, setCode, handleEditorOnMount }) {
-	// const [code, setCode] = useState(javascriptDefault);
-	const [customInput, setCustomInput] = useState("");
-	const [outputDetails, setOutputDetails] = useState(null);
-	const [processing, setProcessing] = useState(null);
-	const [theme, setTheme] = useState("cobalt");
-	const [language, setLanguage] = useState(languageOptions[0]);
+
+	const {customInput, setCustomInput, outputDetails, setOutputDetails, processing, setProcessing, language, CompileCode} = useRunCode()
+	// const [customInput, setCustomInput] = useState("");
+	// const [outputDetails, setOutputDetails] = useState(null);
+	// const [processing, setProcessing] = useState(null);
+	// const [language, setLanguage] = useState(languageOptions[0]);
 	const [outputWindowType, setOutputWindowType] = useState(0);
+	const { theme } = useSettings();
 
-	const onSelectChange = (sl) => {
-		console.log("selected Option...", sl);
-		setLanguage(sl);
-	};
-
-	const onChange = (data) => {
-		setCode((prevCode) => ({
-			...prevCode,
-			text: data,
-		}));
-	};
 
 	const handleCompile = () => {
 		setProcessing(true);
@@ -167,9 +131,10 @@ export default function IDE({ type, code, setCode, handleEditorOnMount }) {
 	};
 
 	return (
-		<main className="h-screen py-10">
+		<main className="h-screen">
 			<button
-				onClick={handleCompile}
+				// onClick={handleCompile}
+				onClick={CompileCode}
 				disabled={!code}
 				className={classnames(
 					"mt-14 border-2 border-transparent rounded-md shadow-md px-4 py-2 hover:shadow-lg transition duration-200 text-white flex-shrink-0",
@@ -212,35 +177,33 @@ export default function IDE({ type, code, setCode, handleEditorOnMount }) {
 				minSize={100}
 				maxSize={-100}
 				defaultSize="50%"
-				className="mt-4"
+				className="mt-40"
 			>
 				<Editor
 					height="100%"
 					defaultLanguage="javascript"
 					defaultValue="// Write your code here"
-					theme="vs-dark"
+					theme={theme}
 					value={code}
-					// onChange={onChange}
-					// onMount={handleEditorOnMount}
 					onMount={(editor) => handleEditorOnMount(editor, "program")}
 				/>
-				<div className="h-full w-full bg-gray-900 p-5">
+				<div className="h-full w-full bg-dark p-5">
 					<div className="w-full flex gap-10 text-lg">
 						<button
-							className={`text-center hover:text-yellow-300 transition-all duration-300 ${
+							className={`text-center transition-all duration-300 text-blue-300 hover:text-opacity-100 ${
 								outputWindowType === 0
-									? "text-yellow-300 underline underline-offset-8"
-									: "text-gray-200"
+									? "text-opacity-100 underline underline-offset-8"
+									: "text-opacity-50"
 							}`}
 							onClick={() => setOutputWindowType(0)}
 						>
 							Terminal
 						</button>
 						<button
-							className={`text-center hover:text-yellow-300 transition-all duration-300 ${
+							className={`text-center transition-all duration-300 text-blue-300 hover:text-opacity-100 ${
 								outputWindowType === 1
-									? "text-yellow-300 underline underline-offset-8"
-									: "text-gray-200"
+									? "text-opacity-100 underline underline-offset-8"
+									: "text-opacity-50"
 							}`}
 							onClick={() => setOutputWindowType(1)}
 						>

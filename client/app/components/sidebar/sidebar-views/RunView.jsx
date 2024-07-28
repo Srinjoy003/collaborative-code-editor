@@ -1,95 +1,104 @@
-import { useRunCode } from "@/context/RunCodeContext"
-import useResponsive from "@/hooks/useResponsive"
-import { ChangeEvent } from "react"
-import toast from "react-hot-toast"
-import { LuCopy } from "react-icons/lu"
-import { PiCaretDownBold } from "react-icons/pi"
+import useResponsive from "@/app/hooks/useResponsive";
+import { ChangeEvent } from "react";
+import toast from "react-hot-toast";
+import { LuCopy } from "react-icons/lu";
+import { PiCaretDownBold } from "react-icons/pi";
+import { IoShareOutline } from "react-icons/io5";
+import { GoSignOut } from "react-icons/go";
+import { IoMdDownload } from "react-icons/io";
+import { IoSaveOutline } from "react-icons/io5";
+import { TfiSave } from "react-icons/tfi";
+import { useRunCode } from "@/app/contexts/RunCodeContext";
+import { classnames } from "@/app/lib/utils/general";
 
 function RunView() {
-    const { viewHeight } = useResponsive()
-    const {
-        setInput,
-        output,
-        isRunning,
-        supportedLanguages,
-        selectedLanguage,
-        setSelectedLanguage,
-        runCode,
-    } = useRunCode()
+	const { viewHeight } = useResponsive();
 
-    const handleLanguageChange = (e) => {
-        const lang = JSON.parse(e.target.value)
-        setSelectedLanguage(lang)
-    }
+	const { CompileCode, processing, code } = useRunCode();
 
-    const copyOutput = () => {
-        navigator.clipboard.writeText(output)
-        toast.success("Output copied to clipboard")
-    }
+	const handleLanguageChange = (e) => {
+		const lang = JSON.parse(e.target.value);
+		setSelectedLanguage(lang);
+	};
 
-    return (
-        <div
-            className="flex flex-col items-center gap-2 p-4"
-            style={{ height: viewHeight }}
-        >
-            <h1 className="view-title">Run Code</h1>
-            <div className="flex h-[90%] w-full flex-col items-end gap-2 md:h-[92%]">
-                <div className="relative w-full">
-                    <select
-                        className="w-full rounded-md border-none bg-darkHover px-4 py-2 text-white outline-none"
-                        value={JSON.stringify(selectedLanguage)}
-                        onChange={handleLanguageChange}
-                    >
-                        {supportedLanguages
-                            .sort((a, b) => (a.language > b.language ? 1 : -1))
-                            .map((lang, i) => {
-                                return (
-                                    <option
-                                        key={i}
-                                        value={JSON.stringify(lang)}
-                                    >
-                                        {lang.language +
-                                            (lang.version
-                                                ? ` (${lang.version})`
-                                                : "")}
-                                    </option>
-                                )
-                            })}
-                    </select>
-                    <PiCaretDownBold
-                        size={16}
-                        className="absolute bottom-3 right-4 z-10 text-white"
-                    />
-                </div>
-                <textarea
-                    className="min-h-[120px] w-full resize-none rounded-md border-none bg-darkHover p-2 text-white outline-none"
-                    placeholder="Write you input here..."
-                    onChange={(e) => setInput(e.target.value)}
-                />
-                <button
-                    className="flex w-full justify-center rounded-md bg-primary p-2 font-bold text-black outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                    onClick={runCode}
-                    disabled={isRunning}
-                >
-                    Run
-                </button>
-                <label className="flex w-full justify-between">
-                    Output :
-                    <button onClick={copyOutput} title="Copy Output">
-                        <LuCopy
-                            size={18}
-                            className="cursor-pointer text-white"
-                        />
-                    </button>
-                </label>
-                <div className="w-full flex-grow resize-none overflow-y-auto rounded-md border-none bg-darkHover p-2 text-white outline-none">
-                    <code>
-                        <pre className="text-wrap">{output}</pre>
-                    </code>
-                </div>
-            </div>
-        </div>
-    )
+	const copyOutput = () => {
+		navigator.clipboard.writeText(output);
+		toast.success("Output copied to clipboard");
+	};
+
+	return (
+		<div
+			className="flex flex-col items-center gap-2 p-4 text-white"
+			style={{ height: viewHeight }}
+		>
+			<h1 className="view-title">Run Code</h1>
+			<div className="flex h-[90%] w-full flex-col justify-between items-end gap-2 md:h-[92%]">
+				<button
+					className={classnames(
+						"flex w-full justify-center rounded-md bg-primaryBlue p-2 font-bold text-white outline-none disabled:cursor-not-allowed disabled:opacity-50",
+						!code.text.program ? "opacity-50 cursor-not-allowed" : ""
+					)}
+					onClick={CompileCode}
+					disabled={!code.text.program}
+				>
+					{processing ? (
+						<div className="flex items-center">
+							<span className="mr-2">Processing...</span>
+							<svg
+								className="animate-spin h-5 w-5 text-white"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+							>
+								<circle
+									className="opacity-25"
+									cx="12"
+									cy="12"
+									r="10"
+									stroke="currentColor"
+									strokeWidth="4"
+								></circle>
+								<path
+									className="opacity-75"
+									fill="currentColor"
+									d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+								></path>
+							</svg>
+						</div>
+					) : (
+						"Run"
+					)}
+				</button>
+				
+				<div className="w-full flex flex-col items-center gap-4 pt-4">
+					<div className="flex w-full gap-4">
+						{/* Share URL button */}
+						<button
+							className="flex flex-grow items-center justify-center rounded-md bg-white p-3 text-black"
+							title="Download Code"
+						>
+							<IoMdDownload size={26} />
+						</button>
+						{/* Copy URL button */}
+						<button
+							className="flex flex-grow items-center justify-center rounded-md bg-white p-3 text-black"
+							title="Copy Code"
+						>
+							<LuCopy size={22} />
+						</button>
+						{/* Leave room button */}
+						<button
+							className="flex flex-grow items-center justify-center rounded-md bg-[#2263fe] p-3 text-white"
+							title="Save Project"
+						>
+							{/* <IoSaveOutline size={26} /> */}
+							<TfiSave size={22} />
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }
 
-export default RunView
+export default RunView;

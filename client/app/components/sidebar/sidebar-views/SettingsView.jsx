@@ -47,7 +47,7 @@ function SettingsView() {
 					title="Font Family"
 				/> */}
 				{/* Choose font size option */}
-				{/* <select
+				<select
 					value={fontSize}
 					onChange={handleFontSizeChange}
 					className="rounded-md border-none bg-darkHover px-4 py-2 text-white outline-none"
@@ -60,7 +60,7 @@ function SettingsView() {
 							</option>
 						);
 					})}
-				</select> */}
+				</select>
 			</div>
 			{/* Choose theme option */}
 			<Select
@@ -91,7 +91,7 @@ function SettingsView() {
 				</label>
 			</div>
 			<button
-				className="mt-auto w-full rounded-md border-none bg-darkHover px-4 py-2 text-white outline-none"
+				className="mt-auto w-full rounded-md border-none  bg-primaryBlue px-4 py-2 text-white outline-none"
 				onClick={resetSettings}
 			>
 				Reset to default

@@ -4,13 +4,15 @@ import ChatsView from "../components/sidebar/sidebar-views/ChatsView"
 // import FilesView from "../components/sidebar/sidebar-views/FilesView"
 // import RunView from "../components/sidebar/sidebar-views/RunView"
 import SettingsView from "../components/sidebar/sidebar-views/SettingsView"
-// import UsersView from "../components/sidebar/sidebar-views/UsersView"
+import UsersView from "../components/sidebar/sidebar-views/UsersView"
 import useWindowDimensions from "../hooks/useWindowDimensions"
 import { createContext, useContext, useState } from "react"
 import { IoSettingsOutline } from "react-icons/io5"
 import { LuFiles } from "react-icons/lu"
 import { PiChats, PiPlay, PiUsers } from "react-icons/pi"
 import { VIEWS } from "../lib/constants/views"
+import { MdOutlineAccountCircle } from "react-icons/md";
+import RunView from "../components/sidebar/sidebar-views/RunView"
 
 const ViewContext = createContext()
 
@@ -24,19 +26,15 @@ export const useViews = () => {
 
 export function ViewContextProvider({ children }) {
     const { isMobile } = useWindowDimensions()
-    const [activeView, setActiveView] = useState(VIEWS.FILES)
+    const [activeView, setActiveView] = useState(VIEWS.RUN)
     const [isSidebarOpen, setIsSidebarOpen] = useState(!isMobile)
     const [viewComponents] = useState({
-        // [VIEWS.FILES]: <FilesView />,
-        // [VIEWS.CLIENTS]: <UsersView />,
-        // [VIEWS.SETTINGS]: <SettingsView />,
-        // [VIEWS.CHATS]: <ChatsView />,
-        // [VIEWS.RUN]: <RunView />,
+    
         [VIEWS.FILES]: <div></div>,
-        [VIEWS.CLIENTS]: <div></div>,
+        [VIEWS.CLIENTS]: <UsersView />,
         [VIEWS.SETTINGS]: <SettingsView />,
         [VIEWS.CHATS]: <ChatsView />,
-        [VIEWS.RUN]: <div></div>,
+        [VIEWS.RUN]: <RunView />,
     })
     const [viewIcons] = useState({
         [VIEWS.FILES]: <LuFiles size={28} />,
@@ -44,6 +42,7 @@ export function ViewContextProvider({ children }) {
         [VIEWS.SETTINGS]: <IoSettingsOutline size={28} />,
         [VIEWS.CHATS]: <PiChats size={30} />,
         [VIEWS.RUN]: <PiPlay size={28} />,
+        [VIEWS.ACCOUNT]: <MdOutlineAccountCircle size={30} />
     })
 
     return (
