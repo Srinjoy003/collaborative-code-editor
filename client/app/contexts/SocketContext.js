@@ -8,7 +8,7 @@ const SocketContext = createContext();
 
 // Create a provider component
 export const SocketProvider = ({ children }) => {
-    const [socket, setSocket] = useState(io({ autoConnect: false }));
+    const [socket, setSocket] = useState(null);
 
     return (
         <SocketContext.Provider value={{ socket, setSocket }}>

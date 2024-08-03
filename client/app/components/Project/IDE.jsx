@@ -48,6 +48,7 @@ export default function IDE({ type, code, setCode, handleEditorOnMount }) {
 					theme={theme}
 					value={code}
 					onMount={(editor) => handleEditorOnMount(editor, "program")}
+					
 				/>
 				<div className="h-full w-full bg-dark p-5">
 					<div className="w-full flex gap-10 text-lg">

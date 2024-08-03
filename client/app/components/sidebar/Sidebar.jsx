@@ -37,27 +37,30 @@ function Sidebar() {
 		}
 	};
 
+	// useEffect(() => {
+	// 	const socket = io(process.env.NEXT_PUBLIC_SERVER_URL, {
+	// 		reconnection: false,
+	// 	});
+
+	// 	setSocket(socket);
+
+	// 	return () => {
+	// 		socket.disconnect();
+	// 	};
+	// }, []);
+
 	useEffect(() => {
-		const socket = io(process.env.NEXT_PUBLIC_SERVER_URL, {
-			reconnection: false,
-		});
+		if (socket){
 
-		setSocket(socket);
-
-		return () => {
-			socket.disconnect();
-		};
-	}, []);
-
-	useEffect(() => {
-		socket.on(SocketEvent.RECEIVE_MESSAGE, ({ message }) => {
-			setMessages((messages) => [...messages, message]);
-			setIsNewMessage(true);
-			console.log(message);
-		});
-		return () => {
-			socket.off(SocketEvent.RECEIVE_MESSAGE);
-		};
+			socket.on(SocketEvent.RECEIVE_MESSAGE, ({ message }) => {
+				setMessages((messages) => [...messages, message]);
+				setIsNewMessage(true);
+				console.log(message);
+			});
+			return () => {
+				socket.off(SocketEvent.RECEIVE_MESSAGE);
+			};
+		}
 	}, [socket]);
 
 	return (

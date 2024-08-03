@@ -30,7 +30,7 @@ const ViewButton = ({ viewName, icon}) => {
             {icon}
             {/* Show dot for new message in chat View Button */}
             {viewName === VIEWS.CHATS && isNewMessage && (
-                <div className="absolute right-0 top-0 h-3 w-3 rounded-full bg-primary"></div>
+                <div className="absolute right-0 top-0 h-3 w-3 rounded-full bg-[#2263fe]"></div>
             )}
         </button>
     )

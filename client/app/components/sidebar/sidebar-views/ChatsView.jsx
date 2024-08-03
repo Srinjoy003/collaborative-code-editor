@@ -13,6 +13,12 @@ const ChatsView = () => {
 	// const [socket, setSocket] = useState(io({ autoConnect: false }));
 	const {socket} = useSocket()
 
+	useEffect(() => {
+		if (socket){
+			setCurrentUser({username: socket.id, roomId: socket.room})
+		}
+	}, [socket])
+
 
 
 	return (

@@ -139,17 +139,17 @@ export default function Editor() {
 		});
 	};
 
-	useEffect(() => {
-		const socket = io(process.env.NEXT_PUBLIC_SERVER_URL, {
-			reconnection: false,
-		});
+	// useEffect(() => {
+	// 	const socket = io(process.env.NEXT_PUBLIC_SERVER_URL, {
+	// 		reconnection: false,
+	// 	});
 
-		setSocket(socket);
+	// 	setSocket(socket);
 
-		return () => {
-			socket.disconnect();
-		};
-	}, []);
+	// 	return () => {
+	// 		socket.disconnect();
+	// 	};
+	// }, []);
 
 	useEffect(() => {
 		// if (prevCodeRef.current !== code.text && !updatingRef.current) {

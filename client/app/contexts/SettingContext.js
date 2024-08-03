@@ -42,20 +42,13 @@ export const SettingsProvider = ({ children }) => {
 		setFontFamily(defaultSettings.fontFamily);
 	};
 
-    useEffect(() => {
-        if (monaco) {
-            Object.keys(themes).forEach((themeName) => {
-                // try {
-                //     monaco.editor.defineTheme(themeName, themes[themeName]);
-                //     console.log(themeName)
-                // } catch (error) {
-                //     console.error(`Error defining theme ${themeName}:`, error);
-                // }
-                monaco.editor.defineTheme(themeName, themes[themeName]);
-
-            });
-        }
-    }, [monaco]);
+	useEffect(() => {
+		if (monaco) {
+			Object.keys(themes).forEach((themeName) => {
+				monaco.editor.defineTheme(themeName, themes[themeName]);
+			});
+		}
+	}, [monaco]);
 
 	useEffect(() => {
 		const updatedSettings = {
@@ -63,6 +56,7 @@ export const SettingsProvider = ({ children }) => {
 			fontSize,
 			fontFamily,
 		};
+	
 		localStorage.setItem("settings", JSON.stringify(updatedSettings));
 	}, [theme, fontSize, fontFamily]);
 
