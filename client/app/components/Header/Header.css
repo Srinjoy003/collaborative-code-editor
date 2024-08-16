@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.header {
+    height: 34vw;
+    margin: 30px auto;
+    background: url('/header_img.png') no-repeat center;
+    position: relative;
+    border-radius: 15px;
+    border-radius: 15px;
+    box-shadow: 1px 9px 38px 10px rgba(0, 0, 0, 0.2);
+}
+
+.header-contents {
+    position: absolute;
+    display: flex;
+    align-items:center;
+    gap: 1vw;
+    max-width: 100%;
+    left:18vh;
+    bottom:13vw;
+    top: 10vw;
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    text-shadow: 0 0 3px #ffffff, 0 0 3px black;
+    animation: fadeIn 1s;
+    animation-fill-mode: forwards;
+    font-stretch: extra-condensed;
+}
+.header-card{
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 0.9;
+    left: 20vh;
+}
+
+.header-contents h1 {
+    font-family: 'Poppins', sans-serif; /* Ensure consistency in font-family declaration */
+    font-weight: bolder;
+    line-height: 0.9;
+    font-size: 80px; /* Default font size */ 
+}
+
+/* Larger screens */
+@media (min-width: 768px) {
+    .header-contents h2 {
+        font-size: 36px;
+    }
+}
+
+/* Even larger screens */
+@media (min-width: 1024px) {
+    .header-contents h2 {
+        font-size: 48px;
+    }
+}
+
+.header-contents button {
+    border: none;
+    color: #747474;
+    font-weight: 500;
+    padding: 1vw 2.3vw;
+    background-color: white;
+    border-radius: 5px;
+    font-size: max(1vw, 13px);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.7);
+
+}
+.codenowbutton button:hover {
+    background-color: rgb(56, 39, 39);
+    /* change the background color on hover */
+    color: #ffffff;
+    /* change the text color on hover */
+}
+/* Add this CSS to your stylesheet (e.g., styles.css) for Header.jsx */
+
+.header-text {
+    text-align: center; /* Centers the text horizontally */
+  }
+  .codenowbutton button{
+    background-color: #ff0000; /* Red background color */
+    color: white; /* White text color */
+    padding: 10px 20px; /* Adds some padding inside the button */
+    font-size: 16px; /* Increases the font size */
+    border: none; /* Removes the border */
+    border-radius: 5px; /* Adds rounded corners to the button */
+    cursor: pointer; /* Changes the mouse cursor to a hand */
+    justify-content: flex;
+    align-items: center;
+  }
+  .codenowbutton{
+    align-items: center;
+    display: flex;
+    padding-left: 64vh;
+    padding-top: 35vh;
+  }
