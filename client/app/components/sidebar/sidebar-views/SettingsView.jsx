@@ -3,7 +3,7 @@
 import useResponsive from "@/app/hooks/useResponsive";
 import { useSettings } from "@/app/contexts/SettingContext";
 import allThemes from '@/app/lib/utils/availableThemes.json'
-import Select from "../../Ui/Select";
+import Select from "../../Ui/customSelect";
 
 function SettingsView() {
 	const {

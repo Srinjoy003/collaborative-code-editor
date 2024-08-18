@@ -2,54 +2,71 @@
 
 
 .logo {
-    width: 100px; /* or any size you want */
-    height: auto; /* keep aspect ratio */
+    width: 100px;
+    /* or any size you want */
+    height: auto;
+    /* keep aspect ratio */
 }
-.navbar{
+
+.navbar {
     padding: 20px 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.navbar-menu{
+.navbar-menu {
     display: flex;
-    list-style-type:none;
+    list-style-type: none;
     gap: 20px;
     color: black;
-    font-size:18px;
-    font-family:poppins;
+    font-size: 18px;
+    font-family: poppins;
 }
-.navbar-right{
+
+.navbar-right {
     display: flex;
     align-items: center;
     gap: 40px;
 }
-.navbar button{
-    background:black; /* change the background color to match the text color */
-    color: #ffffff; /* change the text color to white for contrast */
+
+.navbar button {
+    background: black;
+    /* change the background color to match the text color */
+    color: #ffffff;
+    /* change the text color to white for contrast */
     font-size: 16px;
-    border: none; /* remove the border */
-    padding: 10px 30px; /* fix the padding syntax */
-    border-radius: 50px;
+    border: none;
+    /* remove the border */
+    padding: 10px 30px;
+    /* fix the padding syntax */
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* add a transition for a smooth color change */
+    transition: background-color 0.3s ease;
+    /* add a transition for a smooth color change */
     /* add a hover effect */
 }
-.navbar button:hover{
-        background-color: tomato; /* change the background color on hover */
-        color: #ffffff; /* keep the text color white */
+
+.navbar button:hover {
+    background-color: red;
+    /* change the background color on hover */
+    color: #ffffff;
+    /* keep the text color white */
 }
-.navbar .active{
+
+.navbar .active {
     padding-bottom: 2px;
     border-bottom: 2px solid #49557e;
 }
-.navbar li{
+
+.navbar li {
     cursor: pointer;
 }
-.navbar-search-icon{
+
+.navbar-search-icon {
     position: relative;
 }
+
 .navbar-search-icon .dot {
     position: absolute;
     min-width: 10px;
@@ -58,5 +75,5 @@
     border-radius: 5px;
     top: -8px;
     right: -8px;
-    
+
 }
