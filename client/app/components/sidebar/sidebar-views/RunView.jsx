@@ -22,8 +22,23 @@ function RunView() {
 	};
 
 	const copyOutput = () => {
-		navigator.clipboard.writeText(output);
+		navigator.clipboard.writeText(code.text.program);
 		toast.success("Output copied to clipboard");
+	};
+
+	const downloadCodeAsFile = () => {
+		const content = code.text.program;
+		const blob = new Blob([content], { type: 'text/javascript' }); // change later depending on type of file
+		const link = document.createElement('a');
+		link.href = URL.createObjectURL(blob);
+
+		link.download = 'code.js'; // change later depending on type of file
+	
+		document.body.appendChild(link);
+		link.click();
+		toast.success("Code downloaded");
+		document.body.removeChild(link);
+
 	};
 
 	return (
@@ -72,21 +87,20 @@ function RunView() {
 				
 				<div className="w-full flex flex-col items-center gap-4 pt-4">
 					<div className="flex w-full gap-4">
-						{/* Share URL button */}
 						<button
 							className="flex flex-grow items-center justify-center rounded-md bg-white p-3 text-black"
 							title="Download Code"
+							onClick={downloadCodeAsFile}
 						>
 							<IoMdDownload size={26} />
 						</button>
-						{/* Copy URL button */}
 						<button
 							className="flex flex-grow items-center justify-center rounded-md bg-white p-3 text-black"
 							title="Copy Code"
+							onClick={copyOutput}
 						>
 							<LuCopy size={22} />
 						</button>
-						{/* Leave room button */}
 						<button
 							className="flex flex-grow items-center justify-center rounded-md bg-[#2263fe] p-3 text-white"
 							title="Save Project"

@@ -6,6 +6,7 @@ import { ViewContextProvider } from "../contexts/ViewContext";
 import { SettingsProvider } from "../contexts/SettingContext";
 import { Toaster } from "react-hot-toast";
 import { RunCodeProvider } from "../contexts/RunCodeContext";
+import { UserProvider } from "../contexts/UserContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,15 +19,17 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<RunCodeProvider>
-					<SettingsProvider>
-						<ViewContextProvider>
-							<ChatProvider>
-								<SocketProvider>{children}</SocketProvider>
-							</ChatProvider>
-						</ViewContextProvider>
-					</SettingsProvider>
-				</RunCodeProvider>
+				<UserProvider>
+					<RunCodeProvider>
+						<SettingsProvider>
+							<ViewContextProvider>
+								<ChatProvider>
+									<SocketProvider>{children}</SocketProvider>
+								</ChatProvider>
+							</ViewContextProvider>
+						</SettingsProvider>
+					</RunCodeProvider>
+				</UserProvider>
 				<Toaster position="top-right" />
 			</body>
 		</html>

@@ -8,6 +8,7 @@ import {
 import Avatar from "react-avatar";
 import { DropDown } from "../../Ui/Dropdown";
 import { useState, useEffect } from "react";
+import { useUser } from "@/app/contexts/UserContext";
 
 function Users() {
 	const users = dummyRemoteUsers;
@@ -29,6 +30,7 @@ const User = ({ user }) => {
 		status === USER_CONNECTION_STATUS.ONLINE ? "online" : "offline"
 	}`;
 	const [menuOpen, setMenuOpen] = useState(false);
+	const { userDropdown, setUserDropdown } = useUser();
 
 	useEffect(() => {
 		const closeMenu = () => {
@@ -42,8 +44,18 @@ const User = ({ user }) => {
 		};
 	}, []);
 
+	useEffect(() => {
+
+		if (id != userDropdown){
+			setMenuOpen(false);
+		}
+
+		console.log('CurrentUser', userDropdown)
+	}, [userDropdown]);
+
 	const handleOpenDropDown = (e) => {
 		e.preventDefault();
+		setUserDropdown(id)
 		setMenuOpen(true);
 	};
 
@@ -51,12 +63,7 @@ const User = ({ user }) => {
 		setMenuOpen(false);
 	};
 
-    const closeAllDropDowns = () => {
-        const dropdowns = document.querySelectorAll(".dropdown");
-        dropdowns.forEach((dropdown) => {
-            dropdown.classList.remove("open");
-        });
-    };
+	
 
 	return (
 		<div
@@ -81,7 +88,6 @@ const User = ({ user }) => {
 					id={id}
 					handleDeleteFile={handle1}
 					handleRenameFile={handle1}
-                    
 				/>
 			)}
 		</div>
