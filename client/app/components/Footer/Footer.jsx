@@ -23,7 +23,7 @@ const Footer = () => {
 						collaborative coding, empowering teams globally to build innovative
 						applications with integrated live editing and instant feedback.
 					</p>
-					<div className="footer-social-icons">
+					<div className="footer-social-icons gap-5">
 						<meta
 							name="viewport"
 							content="width=device-width, initial-scale=1.0"

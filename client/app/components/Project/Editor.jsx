@@ -8,8 +8,6 @@ import SocketEvent from "@/app/lib/constants/sockets";
 import { useSocket } from "@/app/contexts/SocketContext";
 import { useRunCode } from "@/app/contexts/RunCodeContext";
 
-
-
 function isEqual(obj1, obj2) {
 	if (obj1 === obj2) return true;
 
@@ -49,7 +47,7 @@ export default function Editor() {
 	// 	type: "program",
 	// });
 
-	const {code, setCode} = useRunCode();
+	const { code, setCode } = useRunCode();
 	const [users, setUsers] = useState({});
 
 	const codeRefs = {
@@ -61,6 +59,9 @@ export default function Editor() {
 
 	const searchParams = useSearchParams();
 	const type = searchParams.get("type");
+	const name = searchParams.get("name");
+	const language = searchParams.get("language");
+
 	// const type = "web";
 
 	const editorRef = useRef(null);
@@ -224,17 +225,24 @@ export default function Editor() {
 
 	return (
 		<main className="w-screen h-screen overflow-hidden">
+			<button
+				className={`bg-secondary
+					border-t-blue-300 text-blue-300
+				px-6 py-2 border-t-2 flex items-center justify-center gap-3 cursor-pointer`}
+			>
+				{/* <FaHtml5 className="text-xl text-red-500" /> */}
+				<p className="font-semibold">index.js</p>
+			</button>
 			{type === "web" ? (
 				<WebDev handleEditorOnMount={handleEditorOnMount} code={code.text} />
 			) : (
 				<IDE
-					type={type}
+					type={type}	
 					code={code.text.program}
 					setCode={setCode}
 					handleEditorOnMount={handleEditorOnMount}
 				/>
 			)}
-
 		</main>
 	);
 }

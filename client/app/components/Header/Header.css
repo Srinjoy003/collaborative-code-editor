@@ -8,6 +8,7 @@
     border-radius: 15px;
     border-radius: 15px;
     box-shadow: 1px 9px 38px 10px rgba(0, 0, 0, 0.2);
+    
 }
 
 .header-contents {
@@ -106,5 +107,5 @@
     align-items: center;
     display: flex;
     padding-left: 64vh;
-    padding-top: 35vh;
+    padding-top: 35vh; 
 }

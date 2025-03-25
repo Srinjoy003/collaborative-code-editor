@@ -14,7 +14,6 @@ const App = () => {
     return (
         <>
             <div className="app">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <Navbar />
                 <Header />
                 <ExploreMenu category={category} setCategory={setCategory} />
@@ -24,7 +23,7 @@ const App = () => {
                             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                             <h1>Everything you need to build software in one place</h1>
                         </div>
-                        <div className="content flex">
+                        <div className="content flex -z-50">
                             <Image
                                 src="/assets/collab.png"
                                 width={700}

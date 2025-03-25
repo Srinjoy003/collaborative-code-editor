@@ -7,7 +7,7 @@ import { BorderBeam } from "../magicui/border-beam";
 const ExploreMenu = ({ category, setCategory }) => {
 	return (
 		<div className="explore-menu" id="explore-menu">
-			<h1>Languages supported</h1>
+			<h1 className="font-bold">Languages supported</h1>
 			<p className="explore-menu-text">codes with your buddies in real time</p>
 			<div className="explore-menu-list">
 				{menu_list.map((item, index) => {

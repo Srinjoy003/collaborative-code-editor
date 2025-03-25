@@ -3,33 +3,50 @@ import "./Navbar.css";
 import { assets } from "@/public/assets/assets";
 import Image from "next/image";
 import ShinyButton from "../magicui/shiny-button";
+import Link from "next/link";
+import { set } from "date-fns";
 
 const Navbar = () => {
-	const [menu, setMenu] = useState("Menu");
+	const [menu, setMenu] = useState("home");
+	const handleScroll = (section) => {
+		document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
+	};
+
 	return (
 		<div className="navbar">
 			<Image src={assets.logo} className="logo" />
 			<ul className="navbar-menu">
 				<li
-					onClick={() => setMenu("Home")}
-					className={menu === "Home" ? "active" : ""}
+					onClick={() => {
+						handleScroll("home");
+						setMenu("home");
+					}}
+					className={menu === "home" ? "active" : ""}
 				>
 					Home
 				</li>
 				<li
-					onClick={() => setMenu("Menu")}
-					className={menu === "Menu" ? "active" : ""}
+					onClick={() => {
+						handleScroll("explore-menu");
+						setMenu("explore-menu");
+					}}
+					className={menu === "explore-menu" ? "active" : ""}
 				>
 					Menu
 				</li>
 				<li
-					onClick={() => setMenu("Contact us")}
-					className={menu === "Contact us" ? "active" : ""}
+					onClick={() => {
+						handleScroll("footer");
+						setMenu("footer");
+					}}
+					className={menu === "footer" ? "active" : ""}
 				>
 					Contact us
 				</li>
 			</ul>
-			<ShinyButton text="Sign up" />
+			<Link href="/signup">
+				<ShinyButton text="Sign up" />
+			</Link>
 		</div>
 	);
 };

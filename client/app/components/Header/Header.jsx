@@ -7,16 +7,14 @@ import { PopoverDemo } from "./clicktoopen";
 
 function Header() {
 	return (
-		<div className="header">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<div className="header z-50 flex flex-col gap-10" id='home'>
 			<div className="header-contents">
-				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 				<h1>Collaborative Coding</h1>
 			</div>
 			<div className="header-card"></div>
-			<div className="codenowbutton">
-				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<div className="codenowbutton" >
 				<PopoverDemo />
+				
 			</div>
 		</div>
 	);

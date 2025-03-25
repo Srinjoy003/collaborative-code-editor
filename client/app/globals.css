@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 @layer base {
-  /* * {
+  * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground;
-  } */
+  }
 
   .view-title {
     @apply mb-2 w-full border-b pb-2 text-start text-lg;

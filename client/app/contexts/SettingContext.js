@@ -35,6 +35,8 @@ export const SettingsProvider = ({ children }) => {
 	const [theme, setTheme] = useState(storedTheme);
 	const [fontSize, setFontSize] = useState(storedFontSize);
 	const [fontFamily, setFontFamily] = useState(storedFontFamily);
+	const [name, setName] = useState('index.js');
+	const [language, setLanguage] = useState('js');
 
 	const resetSettings = () => {
 		setTheme(defaultSettings.theme);
@@ -70,6 +72,10 @@ export const SettingsProvider = ({ children }) => {
 				fontFamily,
 				setFontFamily,
 				resetSettings,
+				name,
+				setName,
+				language,
+				setLanguage
 			}}
 		>
 			{children}
