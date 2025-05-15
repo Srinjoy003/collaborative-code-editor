@@ -7,6 +7,7 @@ import WebDev from "@/app/components/Project/webDev";
 import SocketEvent from "@/app/lib/constants/sockets";
 import { useSocket } from "@/app/contexts/SocketContext";
 import { useRunCode } from "@/app/contexts/RunCodeContext";
+import { languageOptions, getLanguageById } from "@/app/lib/constants/languageOptions";
 
 function isEqual(obj1, obj2) {
 	if (obj1 === obj2) return true;
@@ -47,7 +48,7 @@ export default function Editor() {
 	// 	type: "program",
 	// });
 
-	const { code, setCode } = useRunCode();
+	const { code, setCode, setLanguage} = useRunCode();
 	const [users, setUsers] = useState({});
 
 	const codeRefs = {
@@ -60,7 +61,11 @@ export default function Editor() {
 	const searchParams = useSearchParams();
 	const type = searchParams.get("type");
 	const name = searchParams.get("name");
-	const language = searchParams.get("language");
+	const languageId = Number(searchParams.get("language"));
+	console.log("languageid: ", languageId)
+	const language = getLanguageById(languageId);
+	setLanguage(language)
+	console.log('language', language)
 
 	// const type = "web";
 
@@ -231,7 +236,7 @@ export default function Editor() {
 				px-6 py-2 border-t-2 flex items-center justify-center gap-3 cursor-pointer`}
 			>
 				{/* <FaHtml5 className="text-xl text-red-500" /> */}
-				<p className="font-semibold">index.js</p>
+				<p className="font-semibold">index.{language.extension}</p>
 			</button>
 			{type === "web" ? (
 				<WebDev handleEditorOnMount={handleEditorOnMount} code={code.text} />

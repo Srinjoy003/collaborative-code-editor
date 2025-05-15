@@ -2,18 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { languageOptions } from "@/app/lib/constants/languageOptions";
 
-const languages = [
-	"Python",
-	"C++",
-	"C",
-	"Java",
-	"Go",
-	"C#",
-	"JavaScript",
-	"TypeScript",
-	"HTML/CSS/JS",
-];
 
 const existingProjects = [
 	{
@@ -28,11 +18,14 @@ const existingProjects = [
 export default function ProjectCreation() {
 	const [projectName, setProjectName] = useState("");
 	const [description, setDescription] = useState("");
-	const [language, setLanguage] = useState("Python");
+	const [language, setLanguage] = useState(63);
+	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
 	const handleCreateProject = () => {
 		if (!projectName.trim()) return;
+
+		setLoading(true); 
 
 		console.log({ projectName, description, language });
 
@@ -67,25 +60,50 @@ export default function ProjectCreation() {
 					></textarea>
 					<select
 						value={language}
-						onChange={(e) => setLanguage(e.target.value)}
+						onChange={(e) => setLanguage(Number(e.target.value))}
 						className="w-full p-4 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 					>
-						{languages.map((lang) => (
+						{languageOptions.map((lang) => (
 							<option
-								key={lang}
-								value={lang}
+								key={lang.id}
+								value={lang.id}
 								className="bg-gray-800 text-white"
 							>
-								{lang}
+								{lang.name}
 							</option>
 						))}
 					</select>
 					<button
 						onClick={handleCreateProject}
-						className="w-full p-4 bg-blue-600 text-white font-semibold text-lg rounded-lg hover:bg-blue-700 transition duration-300 shadow-md"
+						className="w-full p-4 bg-blue-600 text-white font-semibold text-lg rounded-lg hover:bg-blue-700 transition duration-300 shadow-md flex items-center justify-center"
+						disabled={loading}
 					>
-						✨ Create Project
+						{loading ? (
+							<svg
+								className="animate-spin h-5 w-5 text-white"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+							>
+								<circle
+									className="opacity-25"
+									cx="12"
+									cy="12"
+									r="10"
+									stroke="currentColor"
+									strokeWidth="4"
+								></circle>
+								<path
+									className="opacity-75"
+									fill="currentColor"
+									d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+								></path>
+							</svg>
+						) : (
+							"✨ Create Project"
+						)}
 					</button>
+
 				</div>
 			</div>
 

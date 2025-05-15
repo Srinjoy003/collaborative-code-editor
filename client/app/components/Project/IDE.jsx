@@ -22,11 +22,10 @@ import { useRunCode } from "@/app/contexts/RunCodeContext";
 
 export default function IDE({ type, code, setCode, handleEditorOnMount }) {
 
-	const {customInput, setCustomInput, outputDetails} = useRunCode()
+	const {customInput, setCustomInput, outputDetails, language} = useRunCode()
 	
 	const [outputWindowType, setOutputWindowType] = useState(0);
 	const { theme } = useSettings();
-
 
 	
 
@@ -48,6 +47,7 @@ export default function IDE({ type, code, setCode, handleEditorOnMount }) {
 					theme={theme}
 					value={code}
 					onMount={(editor) => handleEditorOnMount(editor, "program")}
+					language={language?.value}
 					
 				/>
 				<div className="h-full w-full bg-dark p-5">
