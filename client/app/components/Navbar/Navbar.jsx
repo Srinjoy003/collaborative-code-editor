@@ -44,7 +44,11 @@ const Navbar = () => {
 					Contact us
 				</li>
 			</ul>
-			<Link href="/signup">
+			<Link
+				href="/signup"
+				className="opacity-0 pointer-events-none"
+				onClick={(e) => e.preventDefault()}
+			>
 				<ShinyButton text="Sign up" />
 			</Link>
 		</div>

@@ -39,7 +39,7 @@ export default function ProjectCreation() {
 
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-gray-200 p-6 space-y-20">
-			<div className="w-full max-w-2xl mt-32 p-8 bg-gray-800 rounded-xl shadow-2xl border border-gray-700">
+			<div className="w-full max-w-2xl mt-30 p-8 bg-gray-800 rounded-xl shadow-2xl border border-gray-700">
 				<h2 className="text-4xl font-bold mb-8 text-center text-blue-400">
 					🚀 Create New Project
 				</h2>
@@ -107,7 +107,7 @@ export default function ProjectCreation() {
 				</div>
 			</div>
 
-			<div className="w-full max-w-2xl bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700">
+			{/* <div className="w-full max-w-2xl bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700">
 				<h3 className="text-2xl font-semibold mb-8 text-blue-400">
 					📂 Existing Projects
 				</h3>
@@ -130,7 +130,7 @@ export default function ProjectCreation() {
 						</div>
 					))}
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 }

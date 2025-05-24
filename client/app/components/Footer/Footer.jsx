@@ -58,14 +58,14 @@ const Footer = () => {
 						</li>
 						<li>
 							<a href="mailto:noobdrawsdoodlet@gmail.com">
-								noobdrawsdoodlet@gmail.com
+								collaborativeCoding@gmail.com
 							</a>
 						</li>
 					</ul>
 				</div>
 			</div>
 			<hr />
-			<p>&copy; 2021 NoobDrawsDoodles. All Rights Reserved.</p>
+			<p>&copy; 2025 CollaborativeCoding. All Rights Reserved.</p>
 		</div>
 	);
 };

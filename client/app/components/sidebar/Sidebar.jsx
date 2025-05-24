@@ -98,7 +98,7 @@ function Sidebar() {
 					</button>
 				</div>
 
-				<Link
+				{/* <Link
 					href="/account"
 					className={`self-end transition-all duration-300 text-blue-300 hover:text-opacity-100 ${
 						activeView === VIEWS.CODE ? "text-opacity-100" : "text-opacity-40"
@@ -107,7 +107,7 @@ function Sidebar() {
 					title="Account"
 				>
 					<MdOutlineAccountCircle size={30} />
-				</Link>
+				</Link> */}
 			</div>
 			<div
 				className="absolute left-0 top-0 z-20 w-full flex-grow flex-col bg-dark md:static md:w-[300px]"
