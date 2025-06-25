@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { languageOptions } from "@/app/lib/constants/languageOptions";
 
-
 const existingProjects = [
 	{
 		name: "Collaborative Editor",
@@ -38,8 +37,8 @@ export default function ProjectCreation() {
 	};
 
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-gray-200 p-6 space-y-20">
-			<div className="w-full max-w-2xl mt-30 p-8 bg-gray-800 rounded-xl shadow-2xl border border-gray-700">
+		<div className="mt-0 flex flex-col items-center justify-center min-h-screen bg-gray-900 text-gray-200 p-6 space-y-20">
+			<div className="w-full max-w-2xl p-8 bg-gray-800 rounded-xl shadow-2xl border border-gray-700">
 				<h2 className="text-4xl font-bold mb-8 text-center text-blue-400">
 					🚀 Create New Project
 				</h2>

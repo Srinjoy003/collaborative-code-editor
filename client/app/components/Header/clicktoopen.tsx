@@ -1,12 +1,26 @@
-import React from "react";
-import Link from 'next/link';
+"use client";
+
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
-// import { Popover, PopoverContent, PopoverTrigger } from "@/app/components/ui/popover";
+import { Loader2 } from "lucide-react"; // Spinner icon
 
 export function PopoverDemo() {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleClick = () => {
+    setLoading(true);
+    router.push("/repel");
+  };
+
   return (
-    <Link href="/repel" passHref>
-      <Button variant="default" >Code now</Button>
-    </Link>
+    <Button variant="default" onClick={handleClick} disabled={loading}>
+      {loading ? (
+        <Loader2 className="h-4 w-4 animate-spin" />
+      ) : (
+        "Code now"
+      )}
+    </Button>
   );
 }
