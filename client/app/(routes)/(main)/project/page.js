@@ -6,7 +6,7 @@ import Editor from "@/app/components/Project/Editor";
 import { useEffect } from "react";
 import { useSocket } from "@/app/contexts/SocketContext";
 import { io } from "socket.io-client";
-
+import { Suspense } from "react";
 
 function Home() {
 	const { setSocket } = useSocket();
@@ -22,15 +22,19 @@ function Home() {
 			socket.disconnect();
 		};
 	}, []);
-	
+
 	return (
 		<div className="w-screen h-screen">
-			<SplitterComponent>
-				<Sidebar />
-				<Editor />
-			</SplitterComponent>
+			<Suspense fallback={<div>Loading editor...</div>}>
+				<SplitterComponent>
+					<Sidebar />
+					<Editor />
+				</SplitterComponent>
+			</Suspense>
 		</div>
 	);
 }
 
 export default Home;
+
+
