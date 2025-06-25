@@ -1,30 +1,28 @@
-function useLocalStorage() {
-    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+'use client'
 
+function useLocalStorage() {
     const setItem = (key, value) => {
-        if (isLocalStorageAvailable) {
+        if (typeof window !== 'undefined' && window.localStorage) {
             localStorage.setItem(key, value);
         } else {
             console.error('localStorage is not available');
-            // Optionally handle the error or use a fallback
         }
     };
 
     const getItem = (key) => {
-        if (isLocalStorageAvailable) {
+        if (typeof window !== 'undefined' && window.localStorage) {
             return localStorage.getItem(key);
         } else {
             console.error('localStorage is not available');
-            return null; // Optionally handle the error or use a fallback
+            return null;
         }
     };
 
     const removeItem = (key) => {
-        if (isLocalStorageAvailable) {
+        if (typeof window !== 'undefined' && window.localStorage) {
             localStorage.removeItem(key);
         } else {
             console.error('localStorage is not available');
-            // Optionally handle the error or use a fallback
         }
     };
 
